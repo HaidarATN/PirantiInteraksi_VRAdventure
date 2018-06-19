@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour {
     public float speed;
+    GameController gc;
 	// Use this for initialization
 	void Start () {
-		
-	}
+        gc = GameObject.Find("GameController").GetComponent<GameController>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -16,14 +17,26 @@ public class Movement : MonoBehaviour {
 
     void Move()
     {
-        if(Input.acceleration.x <= -0.2f)
+        if (!gc.isOver)
         {
-            transform.position = transform.position + Camera.main.transform.forward * -speed * Time.deltaTime;
-        }
+            if (Input.acceleration.x <= -0.2f)
+            {
+                transform.position = transform.position + Camera.main.transform.forward * -speed * Time.deltaTime;
+            }
 
-        if (Input.acceleration.x >= 0.2f)
+            if (Input.acceleration.x >= 0.2f)
+            {
+                transform.position = transform.position + Camera.main.transform.forward * speed * Time.deltaTime;
+            }
+        }
+        
+    }
+
+    private void OnTriggerEnter(Collider col)
+    {
+        if (col.gameObject.tag == "Monster")
         {
-            transform.position = transform.position + Camera.main.transform.forward * speed * Time.deltaTime;
+            gc.isOver = true;
         }
     }
 }
