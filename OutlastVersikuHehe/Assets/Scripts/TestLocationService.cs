@@ -141,8 +141,8 @@ public class TestLocationService : MonoBehaviour {
 
             // Orient an object to point to magnetic north.
             //rotateobject.rectTransform.rotation = Quaternion.Euler(0, 0, Input.compass.magneticHeading);
-            rotateobject.transform.rotation = Quaternion.Euler(80, Input.compass.magneticHeading, 0);
-            yield return new WaitForSeconds(0.03f);
+            rotateobject.transform.rotation = Quaternion.Euler(80, -Input.compass.trueHeading, 0);
+            yield return new WaitForSeconds(0.01f);
         }
     }
 
